@@ -4,6 +4,59 @@
   <meta charset="UTF-8" />
   <title>Projects - ObviouslyJoe's Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    /* Modal content container */
+    .modal {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 90%;
+      max-height: 90%;
+      overflow-y: auto;
+      box-shadow: 0 0 15px rgba(127, 0, 255, 0.7);
+      text-align: center;
+      color: #ddd;
+      position: relative;
+    }
+
+    /* Modal image */
+    .modal img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    /* Close button */
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: #8400ff;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .modal-close:hover {
+      background: #6a00cc;
+    }
+  </style>
 </head>
 <body>
   <div class="glow"></div>
@@ -16,15 +69,15 @@
 
     <h1>Projects</h1>
     <div class="project-grid">
-      <div class="project">
-        <img src="Images/image.png" alt="Zesty Project Thumbnail" width="220" height="100">
+      <div class="project" data-title="Untitled Cave Game" data-desc="This is my current project I'm working on, YES it's on Unity what other fucking editor would I fucking use" data-img="Images/image.png">
+        <img src="Images/image.png" alt="Untitled Cave Game Thumbnail" width="220" height="100">
         <div class="project-info">
           <h3>Untitled Cave Game</h3>
           <p>This is my Current project im working on, YES its on unity what other fucking editor would i fucking use</p>
         </div>
       </div>
 
-      <div class="project">
+      <div class="project" data-title="idk the name.." data-desc="I made this, meanwhile developing I learned decent optimization methods, the game was pretty decent, but I usually cancel games when it gets boring, idk if scrapping this was a good thing to do but eh." data-img="Images/image2.png">
         <img src="Images/image2.png" alt="Project 2 Thumbnail" width="220" height="100">
         <div class="project-info">
           <h3>idk the name..</h3>
@@ -32,7 +85,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project" data-title="Private Part Butthole inspection: VR" data-desc="Yea, that was actually the name.. anyways this game was also cool but got boring, I'm pretty sure I started struggling updating the map near the end, idk exactly what but ya" data-img="Images/image3.png">
         <img src="Images/image3.png" alt="Project 3 Thumbnail" width="220" height="100">
         <div class="project-info">
           <h3>Private Part Butthole inspection: VR</h3>
@@ -40,7 +93,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project" data-title="blackrooms game" data-desc="basically infinite backrooms X roblox scp 3008, was a cool thingy but yeaaaa.." data-img="Images/image4.png">
         <img src="Images/image4.png" alt="Project 4 Thumbnail" width="220" height="100">
         <div class="project-info">
           <h3>blackrooms game</h3>
@@ -50,27 +103,69 @@
     </div>
   </div>
 
+  <!-- Modal HTML -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img src="" alt="Full Project Image" id="modalImage">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
   <script>
-  const projects = document.querySelectorAll('.project');
+    const projects = document.querySelectorAll('.project');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalClose');
 
-  projects.forEach(project => {
-    project.addEventListener('mousemove', e => {
-      const rect = project.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const midX = rect.width / 2;
-      const midY = rect.height / 2;
+    // Tilt effect code (keep this)
+    projects.forEach(project => {
+      project.addEventListener('mousemove', e => {
+        const rect = project.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const midX = rect.width / 2;
+        const midY = rect.height / 2;
 
-      const rotateX = ((y - midY) / midY) * 10;
-      const rotateY = ((x - midX) / midX) * 10;
+        const rotateX = ((y - midY) / midY) * 10;
+        const rotateY = ((x - midX) / midX) * 10;
 
-      project.style.transform = `perspective(600px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+        project.style.transform = `perspective(600px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      project.addEventListener('mouseleave', () => {
+        project.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+      });
     });
 
-    project.addEventListener('mouseleave', () => {
-      project.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+    // Open modal when clicking project
+    projects.forEach(project => {
+      project.addEventListener('click', () => {
+        const imgSrc = project.getAttribute('data-img');
+        const title = project.getAttribute('data-title');
+        const desc = project.getAttribute('data-desc');
+
+        modalImage.src = imgSrc;
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+
+        modalOverlay.style.display = 'flex';
+      });
     });
-  });
+
+    // Close modal on close button click or clicking outside modal
+    modalClose.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
