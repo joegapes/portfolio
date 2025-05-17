@@ -34,5 +34,28 @@
       <span>Discord: @obviouslyjoe</span>
     </div>
   </div>
+
+  <!-- Music Player Button -->
+<button id="musicBtn" class="music-btn" title="Open Music Library">🎵</button>
+
+<!-- Music Library Popup -->
+<div id="musicPopup" class="music-popup">
+  <div class="popup-header">
+    <h3>Music Library</h3>
+    <button id="closeMusicPopup" class="close-btn">&times;</button>
+  </div>
+  <div class="popup-content">
+    <button id="muteBtn" class="mute-btn" title="Mute/Unmute">🔊</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="volume-slider" />
+    <hr />
+    <ul id="musicList" class="music-list">
+      <!-- Songs inserted by JS -->
+    </ul>
+  </div>
+</div>
+
+<!-- Audio Element -->
+<audio id="audioPlayer" loop></audio>
+
 </body>
 </html>
