@@ -35,9 +35,11 @@
     </div>
   </div>
 
-  <!-- Volume/Mute button on top left -->
-  <button id="muteBtn" class="mute-btn" title="Mute/Unmute">🔊</button>
-  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="volume-slider" />
+  <!-- Volume controls container -->
+  <div class="volume-control">
+    <button id="muteBtn" class="mute-btn" title="Mute/Unmute">🔊</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="volume-slider" />
+  </div>
 
   <!-- Music Player Button on top right -->
   <button id="musicBtn" class="music-btn" title="Open Music Library">🎵</button>
@@ -67,19 +69,19 @@
 
     let isMuted = false;
 
-    // Songs (replace 'test.mp3' with your actual file URLs)
     const songs = [
       { name: "Test Song", file: "test.mp3" }
     ];
 
-    // Populate song list
     function populateMusicList() {
       musicList.innerHTML = '';
       songs.forEach((song, index) => {
         const li = document.createElement('li');
         li.textContent = song.name;
+        li.classList.add('music-item');
         li.addEventListener('click', () => {
           playSong(index);
+          musicPopup.classList.remove('open'); // Close popup when song plays
         });
         musicList.appendChild(li);
       });
@@ -90,24 +92,20 @@
       audioPlayer.play();
     }
 
-    // Open popup
     musicBtn.addEventListener('click', () => {
-      musicPopup.classList.add('open');
+      musicPopup.classList.toggle('open');
     });
 
-    // Close popup
     closeMusicPopup.addEventListener('click', () => {
       musicPopup.classList.remove('open');
     });
 
-    // Mute toggle
     muteBtn.addEventListener('click', () => {
       isMuted = !isMuted;
       audioPlayer.muted = isMuted;
       muteBtn.textContent = isMuted ? "🔇 Muted" : "🔊";
     });
 
-    // Volume slider changes volume & updates mute state
     volumeSlider.addEventListener('input', () => {
       audioPlayer.volume = volumeSlider.value;
       if (audioPlayer.volume === 0) {
@@ -121,10 +119,8 @@
       }
     });
 
-    // Initialize volume
     audioPlayer.volume = volumeSlider.value;
 
-    // Load music list on page load
     populateMusicList();
   </script>
 </body>
