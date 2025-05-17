@@ -35,97 +35,97 @@
     </div>
   </div>
 
-  <!-- Music Player Button -->
-<button id="musicBtn" class="music-btn" title="Open Music Library">🎵</button>
+  <!-- Volume/Mute button on top left -->
+  <button id="muteBtn" class="mute-btn" title="Mute/Unmute">🔊</button>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="volume-slider" />
 
-<!-- Music Library Popup -->
-<div id="musicPopup" class="music-popup">
-  <div class="popup-header">
-    <h3>Music Library</h3>
-    <button id="closeMusicPopup" class="close-btn">&times;</button>
-  </div>
-  <div class="popup-content">
-    <button id="muteBtn" class="mute-btn" title="Mute/Unmute">🔊</button>
-    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="volume-slider" />
-    <hr />
+  <!-- Music Player Button on top right -->
+  <button id="musicBtn" class="music-btn" title="Open Music Library">🎵</button>
+
+  <!-- Music Library Popup -->
+  <div id="musicPopup" class="music-popup">
+    <div class="popup-header">
+      <h3>Music Library</h3>
+      <button id="closeMusicPopup" class="close-btn">&times;</button>
+    </div>
     <ul id="musicList" class="music-list">
       <!-- Songs inserted by JS -->
     </ul>
   </div>
-</div>
 
-<!-- Audio Element -->
-<audio id="audioPlayer" loop></audio>
+  <!-- Audio Element -->
+  <audio id="audioPlayer" loop></audio>
 
   <script>
-  const musicBtn = document.getElementById('musicBtn');
-  const musicPopup = document.getElementById('musicPopup');
-  const closeMusicPopup = document.getElementById('closeMusicPopup');
-  const muteBtn = document.getElementById('muteBtn');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const musicList = document.getElementById('musicList');
-  const audioPlayer = document.getElementById('audioPlayer');
+    const musicBtn = document.getElementById('musicBtn');
+    const musicPopup = document.getElementById('musicPopup');
+    const closeMusicPopup = document.getElementById('closeMusicPopup');
+    const muteBtn = document.getElementById('muteBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const musicList = document.getElementById('musicList');
+    const audioPlayer = document.getElementById('audioPlayer');
 
-  let isMuted = false;
+    let isMuted = false;
 
-  // Define your songs here (name, file URL, and optional icon)
-  const songs = [
-    { name: "test", file: "test" },
-  ];
+    // Songs (replace 'test.mp3' with your actual file URLs)
+    const songs = [
+      { name: "Test Song", file: "test.mp3" }
+    ];
 
-  // Fill the music list UI
-  function populateMusicList() {
-    songs.forEach((song, index) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="song-icon"></span> ${song.name}`;
-      li.addEventListener('click', () => {
-        playSong(index);
+    // Populate song list
+    function populateMusicList() {
+      musicList.innerHTML = '';
+      songs.forEach((song, index) => {
+        const li = document.createElement('li');
+        li.textContent = song.name;
+        li.addEventListener('click', () => {
+          playSong(index);
+        });
+        musicList.appendChild(li);
       });
-      musicList.appendChild(li);
-    });
-  }
-
-  function playSong(index) {
-    audioPlayer.src = songs[index].file;
-    audioPlayer.play();
-  }
-
-  // Toggle popup open/close
-  musicBtn.addEventListener('click', () => {
-    musicPopup.classList.add('open');
-  });
-
-  closeMusicPopup.addEventListener('click', () => {
-    musicPopup.classList.remove('open');
-  });
-
-  // Mute/unmute toggle
-  muteBtn.addEventListener('click', () => {
-    isMuted = !isMuted;
-    audioPlayer.muted = isMuted;
-    muteBtn.textContent = isMuted ? "🔇 Muted" : "🔊";
-  });
-
-  // Volume slider change
-  volumeSlider.addEventListener('input', () => {
-    audioPlayer.volume = volumeSlider.value;
-    if (audioPlayer.volume === 0) {
-      isMuted = true;
-      audioPlayer.muted = true;
-      muteBtn.textContent = "🔇 Muted";
-    } else {
-      isMuted = false;
-      audioPlayer.muted = false;
-      muteBtn.textContent = "🔊";
     }
-  });
 
-  // Set initial volume
-  audioPlayer.volume = volumeSlider.value;
+    function playSong(index) {
+      audioPlayer.src = songs[index].file;
+      audioPlayer.play();
+    }
 
-  // Populate music list on load
-  populateMusicList();
-</script>
+    // Open popup
+    musicBtn.addEventListener('click', () => {
+      musicPopup.classList.add('open');
+    });
 
+    // Close popup
+    closeMusicPopup.addEventListener('click', () => {
+      musicPopup.classList.remove('open');
+    });
+
+    // Mute toggle
+    muteBtn.addEventListener('click', () => {
+      isMuted = !isMuted;
+      audioPlayer.muted = isMuted;
+      muteBtn.textContent = isMuted ? "🔇 Muted" : "🔊";
+    });
+
+    // Volume slider changes volume & updates mute state
+    volumeSlider.addEventListener('input', () => {
+      audioPlayer.volume = volumeSlider.value;
+      if (audioPlayer.volume === 0) {
+        isMuted = true;
+        audioPlayer.muted = true;
+        muteBtn.textContent = "🔇 Muted";
+      } else {
+        isMuted = false;
+        audioPlayer.muted = false;
+        muteBtn.textContent = "🔊";
+      }
+    });
+
+    // Initialize volume
+    audioPlayer.volume = volumeSlider.value;
+
+    // Load music list on page load
+    populateMusicList();
+  </script>
 </body>
 </html>
