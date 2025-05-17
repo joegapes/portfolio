@@ -57,5 +57,77 @@
 <!-- Audio Element -->
 <audio id="audioPlayer" loop></audio>
 
+  <script>
+  const musicBtn = document.getElementById('musicBtn');
+  const musicPopup = document.getElementById('musicPopup');
+  const closeMusicPopup = document.getElementById('closeMusicPopup');
+  const muteBtn = document.getElementById('muteBtn');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const musicList = document.getElementById('musicList');
+  const audioPlayer = document.getElementById('audioPlayer');
+
+  let isMuted = false;
+
+  // Define your songs here (name, file URL, and optional icon)
+  const songs = [
+    { name: "Chill Vibes", file: "music/chill-vibes.mp3" },
+    { name: "Retro Beat", file: "music/retro-beat.mp3" },
+    { name: "Ambient Space", file: "music/ambient-space.mp3" }
+  ];
+
+  // Fill the music list UI
+  function populateMusicList() {
+    songs.forEach((song, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="song-icon"></span> ${song.name}`;
+      li.addEventListener('click', () => {
+        playSong(index);
+      });
+      musicList.appendChild(li);
+    });
+  }
+
+  function playSong(index) {
+    audioPlayer.src = songs[index].file;
+    audioPlayer.play();
+  }
+
+  // Toggle popup open/close
+  musicBtn.addEventListener('click', () => {
+    musicPopup.classList.add('open');
+  });
+
+  closeMusicPopup.addEventListener('click', () => {
+    musicPopup.classList.remove('open');
+  });
+
+  // Mute/unmute toggle
+  muteBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    audioPlayer.muted = isMuted;
+    muteBtn.textContent = isMuted ? "🔇 Muted" : "🔊";
+  });
+
+  // Volume slider change
+  volumeSlider.addEventListener('input', () => {
+    audioPlayer.volume = volumeSlider.value;
+    if (audioPlayer.volume === 0) {
+      isMuted = true;
+      audioPlayer.muted = true;
+      muteBtn.textContent = "🔇 Muted";
+    } else {
+      isMuted = false;
+      audioPlayer.muted = false;
+      muteBtn.textContent = "🔊";
+    }
+  });
+
+  // Set initial volume
+  audioPlayer.volume = volumeSlider.value;
+
+  // Populate music list on load
+  populateMusicList();
+</script>
+
 </body>
 </html>
