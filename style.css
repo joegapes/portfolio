@@ -1,102 +1,80 @@
-/* Basic reset */
-* {
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+  color: white;
+  overflow-x: hidden;
 }
 
-/* Background glow */
 .glow {
   position: fixed;
-  top: -200px;
-  left: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #00ffff, transparent 70%);
-  filter: blur(100px);
-  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.2), transparent 70%);
+  z-index: 0;
 }
 
-/* Center the window */
 .window {
-  max-width: 600px;
-  margin: 50px auto;
-  background: #121212;
-  color: #eee;
+  background-color: rgba(20, 20, 20, 0.8);
+  border-radius: 16px;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 40px #00ffff55;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 5vh auto;
+  width: 80%;
+  max-width: 800px;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
 }
 
-/* Navigation */
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.2em;
+  color: cyan;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-top: 0;
+  color: #aaa;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+.tagline {
+  font-style: italic;
+  color: #888;
+  margin-top: 20px;
+}
+
 .nav {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   gap: 10px;
   margin-bottom: 20px;
 }
 
 .nav-button {
-  background: #222;
-  color: #00ffff;
-  border: none;
+  background: none;
+  border: 2px solid cyan;
+  color: cyan;
   padding: 10px 20px;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 1em;
   cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 
 .nav-button:hover {
-  background: #00ffff;
-  color: #121212;
+  background-color: cyan;
+  color: black;
 }
 
-/* Headings */
-h1 {
-  font-size: 2.8rem;
-  margin-bottom: 5px;
-  color: #00ffff;
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: 300;
-  margin-bottom: 25px;
-  color: #66ffff;
-}
-
-/* Paragraphs */
-p {
-  margin-bottom: 20px;
-  line-height: 1.5;
-  font-size: 1.1rem;
-  color: #ccc;
-}
-
-p em {
-  font-style: italic;
-  color: #00dddd;
-}
-
-p strong {
-  color: #00ffff;
-}
-
-/* Tagline */
-.tagline {
-  font-style: italic;
-  font-size: 1rem;
-  color: #888;
-  margin-top: 30px;
-  text-align: center;
-}
-
-/* Links */
 .links {
-  margin-top: 30px;
-  font-size: 1rem;
-  color: #00ffff;
-  text-align: center;
+  margin-top: 20px;
+  font-size: 1em;
+  color: #ccc;
 }
