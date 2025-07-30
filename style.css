@@ -18,26 +18,47 @@ body {
   position: relative;
 }
 
-/* Remove glow element if used */
+/* REMOVE glow */
 .glow {
   display: none;
 }
 
-/* The main window */
-.window {
+/* Consistent terminal-style window */
+.window,
+.modal {
   background-color: transparent;
-  padding: 40px;
-  border-radius: 20px;
-  max-width: 600px;
-  width: 100%;
-  text-align: left;
-  position: relative;
-  z-index: 1;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: monospace;
+  padding: 30px;
+  text-align: left;
+  z-index: 1;
   box-shadow: none;
 }
 
-/* Navigation button container */
+/* Terminal-style project boxes */
+.project {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: monospace;
+  box-shadow: none;
+  text-align: left;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.project:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: scale(1.01);
+}
+
+/* Navigation container */
 .nav {
   display: flex;
   justify-content: center;
@@ -45,8 +66,9 @@ body {
   margin-bottom: 25px;
 }
 
-/* Buttons base style */
-.nav button {
+/* Terminal-style buttons */
+.nav button,
+.nav a {
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 10px 20px;
@@ -54,25 +76,20 @@ body {
   color: #ffffff;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: normal;
+  font-family: monospace;
   font-size: 1rem;
   user-select: none;
-  font-family: monospace;
+  text-decoration: none;
+  box-shadow: none;
 }
 
-/* Remove glow */
-.nav button::before {
-  display: none;
-}
-
-/* Hover effect: lighter border */
-.nav button:hover {
+.nav button:hover,
+.nav a:hover {
   background-color: rgba(255, 255, 255, 0.05);
   border-color: #ffffff;
   color: #ffffff;
 }
 
-/* Remove focus outline */
 .nav button:focus {
   outline: none;
 }
@@ -110,7 +127,7 @@ p {
   font-family: monospace;
 }
 
-/* Discord link */
+/* Links section */
 .links {
   text-align: center;
   margin-top: 25px;
@@ -138,18 +155,43 @@ p {
   margin-top: 30px;
 }
 
-/* Terminal-style project boxes */
-.project {
+/* Modal close button if any */
+.modal-close {
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 20px;
-  border-radius: 10px;
   color: #ffffff;
-  font-family: monospace;
-  box-shadow: none;
-  text-align: left;
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease;
+  border-radius: 6px;
+  padding: 6px 12px;
   cursor: pointer;
-  will-change: transform;
+  font-family: monospace;
+}
+
+.modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Mobile fixes */
+@media (max-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .window {
+    padding: 20px;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
 }
