@@ -51,7 +51,6 @@ body {
   text-align: left;
   position: relative;
   z-index: 1;
-  /* subtle inner glow to enhance */
   box-shadow:
     inset 0 0 15px rgba(128, 0, 255, 0.3),
     0 10px 25px rgba(128, 0, 255, 0.2);
@@ -162,6 +161,7 @@ p {
   cursor: pointer;
 }
 
+/* Project grid layout */
 .project-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -169,27 +169,18 @@ p {
   margin-top: 30px;
 }
 
+/* Terminal-style project boxes */
 .project {
-  background-color: rgba(255, 255, 255, 0.05); /* transparent white */
-  border: 1px solid rgba(255, 255, 255, 0.2);  /* white-ish outline */
+  background-color: rgba(255, 255, 255, 0.05); /* Transparent white */
+  border: 1px solid rgba(255, 255, 255, 0.2);  /* Subtle white outline */
   padding: 20px;
   border-radius: 10px;
   color: #ffffff;
-  font-family: monospace; /* terminal style */
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05); /* subtle glow */
+  font-family: monospace; /* Terminal style font */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
   text-align: left;
   transform-style: preserve-3d;
   transition: transform 0.2s ease;
   cursor: pointer;
   will-change: transform;
 }
-
-
-.project {
-  /* add transform-style and transition for smooth tilt */
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease;
-  cursor: pointer; /* optional, to hint interactivity */
-  will-change: transform;
-}
-
